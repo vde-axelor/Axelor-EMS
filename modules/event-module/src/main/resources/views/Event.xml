@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+
+<grid model="com.axelor.ems.db.Event" title="Event" name="event-grid">
+	<field name="reference" title="Reference"/>
+	<field name="startdate" title="Start Date"/>
+	<field name="enddate" title="End Date"/>
+	<field name="address" title="Venue"/>
+	<field name="regopen" title="Registration Open"/>
+	<field name="regclose" title="Registration Close"/>
+	<field name="capacity" title="Capacity"/>
+	<field name="eventfee" title="Event Fees"/>
+	<field name="description" title="Description"/>
+	<field name="discount" title="Discounts"/>
+	<field name="eventregistration" title="Event Registration"/>
+	<field name="totalentry" title="Total Entry"/>
+	<field name="amountcollect" title="Amount Collected"/>
+	<field name="totaldisc" title="Total Discount"/>
+</grid>
+
+<form model="com.axelor.ems.db.Event" title="Event" name="event-form">
+	<panel>
+		<field name="reference" title="Reference"/>
+		<field name="startdate" title="Start Date"/>
+		<field name="enddate" title="End Date"/>
+		<field name="address" title="Venue"/>
+		<field name="regopen" title="Registration Open"/>
+		<field name="regclose" title="Registration Close"/>
+		<field name="capacity" title="Capacity"/>
+		<field name="eventfee" title="Event Fees"/>
+		<field name="description" title="Description"/>
+		<field name="discount" title="Discounts"/>
+		<field name="eventregistration" title="Event Registration"/>
+		<field name="totalentry" title="Total Entry" readonly="true"/>
+		<field name="amountcollect" title="Amount Collected" readonly="true"/>
+		<field name="totaldisc" title="Total Discount" readonly="true"/>
+	</panel>
+</form>
+
+<cards name="event-card" model="com.axelor.ems.db.Event" title="Event Card">
+	<field name="reference" title="Reference"/>
+	<field name="startdate" title="Start Date"/>
+	<field name="enddate" title="End Date"/>
+	<field name="address" title="Venue"/>
+	<field name="regopen" title="Registration Open"/>
+	<field name="regclose" title="Registration Close"/>
+	<field name="capacity" title="Capacity"/>
+	<field name="eventfee" title="Event Fees"/>
+	<field name="description" title="Description"/>
+	<field name="discount" title="Discounts"/>
+	<field name="eventregistration" title="Event Registration"/>
+	<field name="totalentry" title="Total Entry"/>
+	<field name="amountcollect" title="Amount Collected"/>
+	<field name="totaldisc" title="Total Discount"/>
+	<template>
+  		<![CDATA[
+ 		<div class="span4 card-event">
+    		<strong>{{reference}}</strong>
+    		<br/>
+    		<strong>{{startdate}}</strong>
+    		<br/>
+    		<strong>{{enddate}}</strong>
+    		<br/>
+    		<strong>{{address}}</strong>
+    		<br/>
+    		<strong>{{regopen}}</strong>
+    		<br/>
+    		<strong>{{regclose}}</strong>
+    		<br/>
+    		<strong>{{capacity}}</strong>
+    		<br/>
+    		<strong>{{eventfee}}</strong>
+    		<br/>
+    		<strong>{{description}}</strong>
+    		<br/>
+    		<strong>{{discount}}</strong>
+    		<br/>
+    		<strong>{{eventregistration}}</strong>
+    		<br/>
+    		<strong>{{totalentry}}</strong>
+    		<br/>
+    		<strong>{{amountcollect}}</strong>
+    		<br/>
+    		<strong>{{totaldisc}}</strong>
+    		
+  		</div>
+ 	]]>
+  	</template>
+</cards>
+
+<calendar name="event-calander" model="com.axelor.ems.db.Event" eventStart="startdate" title="Event Calander">
+	<field name="address"/>
+</calendar>
+
+
+</object-views>

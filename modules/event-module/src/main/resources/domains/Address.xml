@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+  http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+
+	<module package="com.axelor.ems.db" name="address"/>
+
+	<entity name="Address">
+		<string name="fh_no" title="Flat/House No."/>
+		<string name="street" title="Street"/>
+		<string name="landmark" title="LandMark"/>
+		<string name="city" title="City"/>
+		<string name="country" title="Country"/>
+		<string name="fullName" title="FullName" column="address">
+			<![CDATA[
+ 				return fh_no + "," + street + "," + landmark + "," + city + "," + country;
+ 			]]>
+		</string>
+	</entity>
+</domain-models>

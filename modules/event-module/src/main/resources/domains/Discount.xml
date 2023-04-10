@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+  http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+
+	<module package="com.axelor.ems.db" name="discount"/>
+
+	<entity name="Discount">
+		<integer name="before_days" title="Before Days"/>
+		<decimal name="discount_percent" title="Discount Percent"/>
+		<decimal name="discount_amount" title="Discount Amount"/>
+	</entity>
+</domain-models>

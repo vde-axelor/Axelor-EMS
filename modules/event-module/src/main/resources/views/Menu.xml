@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+
+	<menuitem title="Event Managment" name="ems-root"
+		icon="fa-sharp fa-regular fa-calendar-lines-pen"/>
+
+	<menuitem title="Discount Detail" name="discount-detail"
+		parent="ems-root" action="discount.action" />
+	<action-view name="discount.action" title="Discount"
+		model="com.axelor.ems.db.Discount">
+		<view type="grid" name="discount-grid" />
+		<view type="form" name="discount-form" />
+	</action-view>
+	
+	<menuitem title="Address Detail" name="address-detail"
+		parent="ems-root" action="address.action" />
+	<action-view name="address.action" title="Address"
+		model="com.axelor.ems.db.Address">
+		<view type="grid" name="address-grid" />
+		<view type="form" name="address-form" />
+	</action-view>
+	
+	<menuitem title="Event Detail" name="event-detail"
+		parent="ems-root" action="event.action" />
+	<action-view name="event.action" title="Event"
+		model="com.axelor.ems.db.Event">
+		<view type="grid" name="event-grid" />
+		<view type="form" name="event-form" />
+		<view type="cards" name="event-card"/>
+		<view type="calendar" name="event-calander"/>
+	</action-view>
+	
+	<menuitem title="EventRegistration Detail" name="eventreg-detail"
+		parent="ems-root" action="eventreg.action" />
+	<action-view name="eventreg.action" title="Event Registration"
+		model="com.axelor.ems.db.EventRegistration">
+		<view type="grid" name="eventreg-grid" />
+		<view type="form" name="eventreg-form" />
+	</action-view>
+</object-views>
