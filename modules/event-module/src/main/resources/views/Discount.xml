@@ -13,8 +13,13 @@
 <form model="com.axelor.ems.db.Discount" title="Discount" name="discount-form">
 	<panel stacked="true">
 		<field name="before_days" title="Before Days"/>
-		<field name="discount_percent" title="Discount Percent"/>
+		<field name="discount_percent" title="Discount Percent" onChange="action-for-discount"/>
 		<field name="discount_amount" title="Discount Amount"/>
 	</panel>
 </form>
+
+<action-method name="action-for-discount">
+	<call class="com.axelor.event.controller.EventController" method="discountAmount"/>
+</action-method>
+
 </object-views>

@@ -10,5 +10,6 @@
 		<integer name="before_days" title="Before Days"/>
 		<decimal name="discount_percent" title="Discount Percent"/>
 		<decimal name="discount_amount" title="Discount Amount"/>
+		<many-to-one ref="com.axelor.ems.db.Event" name="event" />
 	</entity>
 </domain-models>

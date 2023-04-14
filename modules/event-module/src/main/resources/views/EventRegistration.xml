@@ -9,13 +9,13 @@
 	<field name="name" title="Name"/>
 	<field name="email" title="Email"/>
 	<field name="address" title="Address"/>
-	<field name="regdate" title="Registration Date"/>
+	<field name="regdate" title="Registration Date" onChange="fee"/>
 	<field name="amount" title="Amount"/>
 </grid>
 
 <form model="com.axelor.ems.db.EventRegistration" title="Event Registration" name="eventreg-form">
 	<panel>
-		<field name="event" title="Event"/>
+		<field name="event" title="Event" onChange="action-change-amount"/>
 	<field name="name" title="Name"/>
 	<field name="email" title="Email"/>
 	<field name="address" title="Address"/>
@@ -23,4 +23,10 @@
 	<field name="amount" title="Amount"/>
 	</panel>
 </form>
+
+<action-record name="action-change-amount"
+        model="com.axelor.ems.db.EventRegistration">
+        <field name="amount" expr="eval: event.eventfee" />
+    </action-record>
+
 </object-views>

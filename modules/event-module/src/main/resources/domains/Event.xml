@@ -7,7 +7,7 @@
 	<module package="com.axelor.ems.db" name="event"/>
 
 	<entity name="Event">
-		<string name="reference" title="Reference" column="reference"/>
+		<string name="reference" title="Reference" column="reference" namecolumn="true"/>
 		<datetime name="startdate" title="Start Date"/>
 		<datetime name="enddate" title="End Date"/>
 		<many-to-one ref="com.axelor.ems.db.Address" name="address" title="Venue"/>
@@ -16,8 +16,8 @@
 		<integer name="capacity" title="Capacity"/>
 		<decimal name="eventfee" title="Event Fees"/>
 		<string name="description" title="Discription" large="true"/>
-		<one-to-many ref="com.axelor.ems.db.Discount" name="discount" title="Discounts"/>
-		<one-to-many ref="com.axelor.ems.db.EventRegistration" name="eventregistration" title="Event Registrations"/>
+		<one-to-many ref="com.axelor.ems.db.Discount" name="discount" title="Discounts" mappedBy="event"/>
+		<one-to-many ref="com.axelor.ems.db.EventRegistration" name="eventregistration" title="Event Registrations" mappedBy="event"/>
 		<integer name="totalentry" title="Total Entry" readonly="true"/>
 		<decimal name="amountcollect" title="Amount Collected" readonly="true"/>
 		<decimal name="totaldisc" title="Total Discount" readonly="true"/>

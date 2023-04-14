@@ -10,7 +10,7 @@
 		<string name="fh_no" title="Flat/House No."/>
 		<string name="street" title="Street"/>
 		<string name="landmark" title="LandMark"/>
-		<string name="city" title="City"/>
+		<string name="city" title="City" namecolumn="true"/>
 		<string name="country" title="Country"/>
 		<string name="fullName" title="FullName" column="address">
 			<![CDATA[

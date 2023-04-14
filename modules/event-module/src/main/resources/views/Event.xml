@@ -21,19 +21,24 @@
 	<field name="totaldisc" title="Total Discount"/>
 </grid>
 
-<form model="com.axelor.ems.db.Event" title="Event" name="event-form">
-	<panel>
+<form model="com.axelor.ems.db.Event" title="Event" name="event-form" onSave="action-for-check-event-date"><!-- action-for-check-capacity, -->
+	<panel title="Registration">
 		<field name="reference" title="Reference"/>
 		<field name="startdate" title="Start Date"/>
 		<field name="enddate" title="End Date"/>
-		<field name="address" title="Venue"/>
+		<field name="address" title="Venue" onChange="action-for-check-date"/>
 		<field name="regopen" title="Registration Open"/>
 		<field name="regclose" title="Registration Close"/>
-		<field name="capacity" title="Capacity"/>
+		<field name="capacity" title="Capacity" />
 		<field name="eventfee" title="Event Fees"/>
-		<field name="description" title="Description"/>
-		<field name="discount" title="Discounts"/>
-		<field name="eventregistration" title="Event Registration"/>
+		<field name="description" title="Description" onSelect="check-total-entry" colSpan="12"/>
+	</panel>
+	<panel title="Information">
+		<field name="discount" title="Discounts" colSpan="12" onChange="action-for-total-discount"/>
+		<field name="eventregistration" title="Event Registration" colSpan="12" onChange="action-total-entry,action-total-amount"/>
+	</panel>
+	
+	<panel title="Summry">
 		<field name="totalentry" title="Total Entry" readonly="true"/>
 		<field name="amountcollect" title="Amount Collected" readonly="true"/>
 		<field name="totaldisc" title="Total Discount" readonly="true"/>
@@ -96,4 +101,27 @@
 </calendar>
 
 
+<action-method name="action-total-entry">
+	<call class="com.axelor.event.controller.EventController" method="totalGuest"/>
+</action-method>
+
+<action-method name="action-total-amount">
+	<call class="com.axelor.event.controller.EventController" method="totalAmount"/>
+</action-method>
+
+<action-method name="action-for-total-discount">
+	<call class="com.axelor.event.controller.EventController" method="totalDiscountAmount"/>
+</action-method>
+
+<action-method name="action-for-check-date">
+	<call class="com.axelor.event.controller.EventController" method="checkdate"/>
+</action-method>
+
+<action-method name="action-for-check-capacity">
+	<call class="com.axelor.event.controller.EventController" method="checkcapacity"/>
+</action-method>
+
+<action-method name="action-for-check-event-date">
+	<call class="com.axelor.event.controller.EventController" method="checkDateEr"/>
+</action-method>
 </object-views>
