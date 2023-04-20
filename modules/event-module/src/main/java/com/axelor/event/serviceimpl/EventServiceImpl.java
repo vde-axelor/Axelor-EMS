@@ -1,8 +1,7 @@
 package com.axelor.event.serviceimpl;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 
 import com.axelor.ems.db.Discount;
 import com.axelor.ems.db.Event;
@@ -28,7 +27,7 @@ public class EventServiceImpl implements EventService{
 	}
 
 	@Override
-	public Discount totalDiscoint(Discount d, Event e) {
+	public Discount totalDiscount(Discount d, Event e) {
 		BigDecimal fee = e.getEventfee();
 		BigDecimal amount = d.getDiscount_percent().multiply(fee).divide(new BigDecimal(100));
 		d.setDiscount_amount(amount);
@@ -37,31 +36,11 @@ public class EventServiceImpl implements EventService{
 	}
 
 	@Override
-	public Event totalDiscountAmount(Event e) {
-		BigDecimal totalDiscountAmount = BigDecimal.ZERO;
-		totalDiscountAmount = e.getDiscount().stream().map(Discount::getDiscount_amount).reduce(BigDecimal.ZERO,BigDecimal::add);
-		long totalEntry = e.getEventregistration().stream().count();
-		e.setTotaldisc(totalDiscountAmount.multiply(new BigDecimal(totalEntry)));
-		return e;
+	public LocalDate checkDate(Discount d, Event e) {
+		LocalDate date = e.getRegclose();
+		int days = d.getBefore_days();
+		LocalDate newDate = date.minusDays(days);
+		return newDate;
 	}
-
-	@Override
-	public Event datecheck(Event e) {
-		LocalDateTime startdate=e.getStartdate();
-		LocalDateTime enddate=e.getEnddate();
-		return e;
-	}
-
-	@Override
-	public Event checkcapacity(Event e) {
-		long totalEntry = e.getEventregistration().stream().count();
-		int  te =(int)totalEntry; 
-		int capacity=e.getCapacity();
-		if(te < capacity) {
-			
-		}
-		return null;
-	}
-	
 	
 }

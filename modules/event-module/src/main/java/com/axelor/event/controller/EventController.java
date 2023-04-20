@@ -1,106 +1,102 @@
 package com.axelor.event.controller;
 
-import java.time.Instant;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import javax.inject.Inject;
-
-import org.checkerframework.checker.index.qual.LengthOf;
-
 import com.axelor.ems.db.Discount;
 import com.axelor.ems.db.Event;
 import com.axelor.ems.db.EventRegistration;
+import com.axelor.evemt.translation.Translation;
 import com.axelor.event.serviceimpl.EventServiceImpl;
+import com.axelor.i18n.I18n;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 
 public class EventController {
-@Inject EventServiceImpl es;
-	
+	@Inject
+	EventServiceImpl es;
+
 	public void totalGuest(ActionRequest request, ActionResponse response) {
 
-	Event event =  request.getContext().asType(Event.class);
-	event = es.countEntry(event);
-	response.setValue("totalentry", event.getTotalentry());
+		Event event = request.getContext().asType(Event.class);
+		event = es.countEntry(event);
+		response.setValue("totalentry", event.getTotalentry());
 	}
-	
+
 	public void totalAmount(ActionRequest request, ActionResponse response) {
-		Event event =  request.getContext().asType(Event.class);
+		Event event = request.getContext().asType(Event.class);
 		event = es.totalAmount(event);
 		response.setValue("amountcollect", event.getAmountcollect());
 	}
-	
+
 	public void discountAmount(ActionRequest request, ActionResponse response) {
-		Discount discount =  request.getContext().asType(Discount.class);
-		Event e=request.getContext().getParentContext().asType(Event.class);
-		discount = es.totalDiscoint(discount, e);
+		Discount discount = request.getContext().asType(Discount.class);
+		Event e = request.getContext().getParent().asType(Event.class);
+		discount = es.totalDiscount(discount, e);
 		response.setValue("discount_amount", discount.getDiscount_amount());
 	}
-	
-	
+
 	public void totalDiscountAmount(ActionRequest request, ActionResponse response) {
-		Event event =  request.getContext().asType(Event.class);
-		event = es.totalDiscountAmount(event);
-		response.setValue("totaldisc", event.getTotaldisc());
+		Event event = request.getContext().asType(Event.class);
+		BigDecimal totalAmount = event.getEventfee().multiply(new BigDecimal(event.getTotalentry()));
+		BigDecimal amountcollect = event.getAmountcollect();
+		BigDecimal discount = totalAmount.subtract(amountcollect);
+		response.setValue("totaldisc", discount);
 	}
-	
-	public void checkdate(ActionRequest request, ActionResponse response) {
-		Event event =  request.getContext().asType(Event.class);
-		if((event.getStartdate().compareTo(event.getEnddate())>0) || (event.getRegopen().compareTo(event.getRegclose())>0) )
-		{
-			response.setAlert("Enter Proper Date");
-		}
-		else {
-			response.setFlash("Enter Date is Currect");
-		}
-	}
-	
-	public void checkcapacity(ActionRequest request, ActionResponse response) {
-		Event event =  request.getContext().asType(Event.class);
-        event = es.countEntry(event);
-        boolean isSame = event.getCapacity().equals(event);
 
-        if(isSame) {
-            response.setNotify("Perfect..");
-        }
-        else {
-        	response.setAlert("Capacity Exceed..");
-        }
+	public void capicity(ActionRequest request, ActionResponse response) {
+		Event event = request.getContext().asType(Event.class);
+		event = es.countEntry(event);
+		if (!event.getTotalentry().equals(event.getCapacity())) {
+			response.setFlash(I18n.get(Translation.EVENT_TRANSLATION));
+		}
+	}
+
+	public static LocalDate convert(LocalDateTime dateTime) {
+		return dateTime.toLocalDate();
+	}
+	
+	
+
+	public void checkDate(ActionRequest request, ActionResponse response) {
+
+		EventRegistration er = request.getContext().asType(EventRegistration.class);
+		Event e = request.getContext().getParent().asType(Event.class);
 		
+		LocalDate date = convert(er.getRegdate());
+		LocalDate regD = e.getRegopen();
+		LocalDate colD = e.getRegclose();
+		
+			if (!(date.isAfter(regD) && date.isBefore(colD))) {
+				response.setFlash("Date is closed");
+				return;
+			}
+		 
+		long daysBetween = ChronoUnit.DAYS.between(date, colD);
+
+		List<Discount> discount = e.getDiscount();
+		discount.forEach(i-> {
+			if(daysBetween >= i.getBefore_days()) {
+				BigDecimal discountAmount = i.getDiscount_amount();
+				response.setValue("amount", e.getEventfee().subtract(discountAmount));
+			}
+		});
+
 	}
+
+	  public void checkREDate(ActionRequest request, ActionResponse response) {
+		  Event e=request.getContext().asType(Event.class);
+		  LocalDate date=convert(e.getStartdate());
+		  if(e.getRegclose().isBefore(date)) {
+			  response.setFlash("Currect");
+		  }
+		  else {
+			  response.setFlash("Closing date must be before the event start date");
+		  }
+	  }
 	
-public void checkDateEr(ActionRequest request, ActionResponse response) {
-        
-        //EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
-        
-        EventRegistration er =  request.getContext().getParentContext().asType(EventRegistration.class);
-
-        System.err.println(er);
-
-        
-        
-        
-        //EventRegistration er =  request.getContext().getParentContext().asType(EventRegistration.class);
-        //Event event =request.getContext().asType(Event.class);
-
-        
-        //System.err.println(er.getRegdate());
-        //System.err.println(event);
-        
-//        LocalDateTime dateTime = er.getRegdate();
-//        
-//
-//        LocalDate date = convert(dateTime);
-//        LocalDate regD = event.getRegopen();
-//        LocalDate colD = event.getRegclose();
-//        if (date.isAfter(regD) && date.isBefore(colD)) {
-//            System.out.println("Datetime is between start and end");
-//        } else {
-//           response.setError("Date is closed");
-//        }
-        
-
-    }
-
 }

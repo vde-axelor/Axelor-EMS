@@ -16,11 +16,11 @@
 <form model="com.axelor.ems.db.EventRegistration" title="Event Registration" name="eventreg-form">
 	<panel>
 		<field name="event" title="Event" onChange="action-change-amount"/>
-	<field name="name" title="Name"/>
-	<field name="email" title="Email"/>
-	<field name="address" title="Address"/>
-	<field name="regdate" title="Registration Date"/>
-	<field name="amount" title="Amount"/>
+		<field name="name" title="Name"/>
+		<field name="email" title="Email"/>
+		<field name="address" title="Address"/>
+		<field name="regdate" title="Registration Date" onChange="action-for-date"/>
+		<field name="amount" title="Amount"/>
 	</panel>
 </form>
 
@@ -28,5 +28,11 @@
         model="com.axelor.ems.db.EventRegistration">
         <field name="amount" expr="eval: event.eventfee" />
     </action-record>
+
+<action-method name="action-for-date">
+	<call class="com.axelor.event.controller.EventController" method="checkDate"/>
+</action-method>
+
+
 
 </object-views>
